@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akiva | Infraestructura Institucional de Activos Virtuales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00F0FF;
+            --bg-dark: #0A0F1E;
+            --bg-accent: #111827;
+            --text-main: #F3F4F6;
+            --text-dim: #8E9AAF;
+            --white: #FFFFFF;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            padding: 1.5rem 10%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(10, 15, 30, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: -1px;
+        }
+
+        nav a {
+            color: var(--text-main);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+
+        nav a:hover { color: var(--primary); }
+
+        .btn-cta {
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 10%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0a0f1e 100%);
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            max-width: 900px;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(180deg, #fff 0%, #8e9aaf 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+        }
+
+        /* --- Services Grid --- */
+        .section { padding: 8rem 10%; }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        .section-title p { color: var(--primary); font-family: 'Roboto Mono', monospace; font-size: 0.9rem; text-transform: uppercase; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 2.5rem;
+            border-radius: 8px;
+            transition: border 0.3s;
+        }
+
+        .card:hover { border-color: var(--primary); }
+
+        .card h3 { margin-bottom: 1rem; color: var(--white); }
+        .card p { color: var(--text-dim); font-size: 0.95rem; }
+
+        /* --- SVG Logo Icon Component --- */
+        .akiva-logo-svg {
+            width: 40px;
+            height: 40px;
+        }
+
+        /* --- Compliance Badge --- */
+        .badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(0, 240, 255, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--primary);
+        }
+
+        /* --- Contact Form --- */
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-accent);
+            padding: 3rem;
+            border-radius: 12px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: var(--bg-dark);
+            border: 1px solid var(--border);
+            color: white;
+            border-radius: 4px;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 4rem 10%;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            nav { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="#" class="logo-container">
+            <svg class="akiva-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 5L93.3013 30V70L50 95L6.69873 70V30L50 5Z" stroke="#00F0FF" stroke-width="4"/>
+                <path d="M50 25L71.6506 37.5V62.5L50 75L28.3494 62.5V37.5L50 25Z" fill="#00F0FF" fill-opacity="0.2"/>
+                <path d="M50 20V80" stroke="#00F0FF" stroke-width="2"/>
+            </svg>
+            AKIVA
+        </a>
+        <nav>
+            <a href="#servicios">Servicios</a>
+            <a href="#seguridad">Seguridad</a>
+            <a href="#nosotros">Institucional</a>
+            <a href="#contacto" class="btn-cta">Apertura de Cuenta</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="badge">PSAV Registrado en Argentina</div>
+        <h1>Infraestructura de Activos Digitales para el Sector Financiero</h1>
+        <p>Soluciones avanzadas de custodia, intercambio fiat-cripto y liquidez OTC con los más altos estándares de compliance regulatorio.</p>
+        <div style="display: flex; gap: 1rem;">
+            <a href="#contacto" class="btn-cta">Contactar a un Advisor</a>
+            <a href="#servicios" style="color: white; text-decoration: none; padding: 0.8rem 1.5rem; border: 1px solid var(--border); border-radius: 4px;">Explorar Servicios</a>
+        </div>
+    </section>
+
+    <section class="section" id="servicios">
+        <div class="section-title">
+            <p>Nuestras Soluciones</p>
+            <h2>Servicios Financieros de Nueva Generación</h2>
+        </div>
+        <div class="grid">
+            <div class="card">
+                <h3>Fiat ↔ Crypto Gateway</h3>
+                <p>On/Off ramp eficiente para ARS y USD. Operativa institucional con liquidación en el día y reportes detallados.</p>
+            </div>
+            <div class="card">
+                <h3>Custodia Institucional</h3>
+                <p>Almacenamiento en frío con tecnología MPC (Multi-Party Computation) y gobernanza multi-firma personalizada.</p>
+            </div>
+            <div class="card">
+                <h3>Mesa de Ejecución OTC</h3>
+                <p>Liquidez profunda para grandes volúmenes con spread competitivo y ejecución discreta para operadores corporativos.</p>
+            </div>
+            <div class="card">
+                <h3>Gestión de Tesorería</h3>
+                <p>Optimización de excedentes corporativos mediante activos digitales de baja volatilidad y alta liquidez.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" style="background-color: var(--bg-accent);" id="seguridad">
+        <div class="section-title">
+            <p>Confianza de Grado Bancario</p>
+            <h2>Seguridad y Cumplimiento Normativo</h2>
+        </div>
+        <div class="grid">
+            <div class="card" style="background: none;">
+                <h4 style="color: var(--primary); font-family: 'Roboto Mono'; margin-bottom: 1rem;">01. Compliance AML/KYC</h4>
+                <p>Procesos rigurosos de debida diligencia alineados con las normativas de la CNV y estándares internacionales del GAFI.</p>
+            </div>
+            <div class="card" style="background: none;">
+                <h4 style="color: var(--primary); font-family: 'Roboto Mono'; margin-bottom: 1rem;">02. Monitoreo On-Chain</h4>
+                <p>Análisis en tiempo real de transacciones para prevenir actividades ilícitas y asegurar la pureza de los activos.</p>
+            </div>
+            <div class="card" style="background: none;">
+                <h4 style="color: var(--primary); font-family: 'Roboto Mono'; margin-bottom: 1rem;">03. Auditorías Externas</h4>
+                <p>Revisiones periódicas de reservas y seguridad técnica por firmas independientes de primer nivel.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="contacto">
+        <div class="section-title">
+            <h2>Hablemos de su estrategia digital</h2>
+            <p>Un equipo de especialistas está listo para asistir a su empresa.</p>
+        </div>
+        <div class="contact-container">
+            <form>
+                <input type="text" placeholder="Nombre de la Institución" required>
+                <input type="email" placeholder="Correo Corporativo" required>
+                <select style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-dim);">
+                    <option>Interés: Custodia</option>
+                    <option>Interés: Operaciones OTC</option>
+                    <option>Interés: On/Off Ramp</option>
+                </select>
+                <textarea rows="4" placeholder="¿Cómo podemos ayudarlo?"></textarea>
+                <button type="submit" class="btn-cta" style="width: 100%; border: none; cursor: pointer;">Solicitar Información</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div>
+            <p>&copy; 2024 Akiva Technologies S.A. - Proveedor de Servicios de Activos Virtuales (PSAV) registrado ante la CNV.</p>
+        </div>
+        <div style="display: flex; gap: 2rem;">
+            <span>Términos y Condiciones</span>
+            <span>Política de Privacidad</span>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.padding = '1rem 10%';
+                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.5)';
+            } else {
+                header.style.padding = '1.5rem 10%';
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
