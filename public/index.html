@@ -3,322 +3,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Akiva SRL - Proveedor de Servicios de Activos Virtuales (PSAV) registrado en Argentina. Custodia institucional, gateway fiat-cripto y mesa OTC.">
     <title>Akiva | Infraestructura Institucional de Activos Virtuales</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00F0FF;
-            --bg-dark: #0A0F1E;
-            --bg-accent: #111827;
-            --text-main: #F3F4F6;
-            --text-dim: #8E9AAF;
-            --white: #FFFFFF;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --primary-dim: rgba(0,240,255,0.12);
+            --primary-glow: rgba(0,240,255,0.28);
+            --bg: #07091A;
+            --bg-card: #0D1229;
+            --bg-accent: #0F1628;
+            --txt: #E8ECF4;
+            --txt-dim: #7A8499;
+            --txt-muted: #3D4A60;
+            --border: rgba(255,255,255,0.08);
+            --border-h: rgba(0,240,255,0.4);
+            --glass: rgba(255,255,255,0.04);
+            --r-sm: 6px; --r-md: 12px; --r-lg: 20px;
+            --ease: all 0.3s cubic-bezier(.4,0,.2,1);
         }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
+        ::-webkit-scrollbar{width:5px}
+        ::-webkit-scrollbar-track{background:var(--bg)}
+        ::-webkit-scrollbar-thumb{background:rgba(0,240,255,0.2);border-radius:3px}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* ── HEADER ── */
+        header{position:fixed;top:0;width:100%;z-index:1000;padding:1.5rem 6%;display:flex;justify-content:space-between;align-items:center;transition:var(--ease);background:rgba(7,9,26,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid transparent}
+        header.scrolled{padding:1rem 6%;background:rgba(7,9,26,.97);border-bottom:1px solid var(--border);box-shadow:0 4px 40px rgba(0,0,0,.6)}
+        .logo{display:flex;align-items:center;gap:11px;text-decoration:none;color:#fff}
+        .logo svg{width:34px;height:34px}
+        .logo-txt{font-size:1.35rem;font-weight:800;letter-spacing:-.5px}
+        .logo-txt em{font-style:normal;color:var(--primary)}
+        nav{display:flex;align-items:center;gap:.2rem}
+        nav a{color:var(--txt-dim);text-decoration:none;padding:.5rem .9rem;font-size:.875rem;font-weight:500;border-radius:var(--r-sm);transition:var(--ease)}
+        nav a:hover{color:#fff;background:var(--glass)}
+        .nav-cta{background:var(--primary)!important;color:var(--bg)!important;padding:.6rem 1.4rem!important;font-weight:700!important;margin-left:.5rem}
+        .nav-cta:hover{background:#00d4e8!important;box-shadow:0 4px 20px var(--primary-glow)!important;transform:translateY(-1px)}
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;z-index:1100}
+        .hamburger span{display:block;width:24px;height:2px;background:var(--txt);border-radius:2px;transition:var(--ease)}
+        .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+        .hamburger.open span:nth-child(2){opacity:0}
+        .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+        .mob-nav{display:none;position:fixed;inset:0;background:rgba(7,9,26,.98);backdrop-filter:blur(20px);z-index:999;flex-direction:column;align-items:center;justify-content:center;gap:2.2rem;opacity:0;pointer-events:none;transition:opacity .3s}
+        .mob-nav.open{display:flex;opacity:1;pointer-events:all}
+        .mob-nav a{color:var(--txt);text-decoration:none;font-size:1.5rem;font-weight:700;transition:color .3s}
+        .mob-nav a:hover{color:var(--primary)}
+        .mob-cta{background:var(--primary)!important;color:var(--bg)!important;padding:.8rem 2.5rem;border-radius:var(--r-sm)!important;font-size:1rem!important}
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
+        /* ── HERO ── */
+        .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9rem 6% 6rem;position:relative;overflow:hidden}
+        .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 55% at 50% 0%,rgba(0,240,255,.1) 0%,transparent 70%);pointer-events:none}
+        .hero::after{content:'';position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,240,255,.05) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;animation:pulse 5s ease-in-out infinite}
+        @keyframes pulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.25);opacity:.6}}
+        .badge{display:inline-flex;align-items:center;gap:8px;padding:.4rem 1rem;background:var(--primary-dim);color:var(--primary);border-radius:100px;font-size:.75rem;font-weight:600;border:1px solid rgba(0,240,255,.25);margin-bottom:2rem;letter-spacing:.5px;text-transform:uppercase;position:relative}
+        .badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--primary);animation:blink 2s infinite}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+        .hero h1{font-size:clamp(2.4rem,6vw,5rem);font-weight:800;line-height:1.05;letter-spacing:-2px;margin-bottom:1.5rem;background:linear-gradient(155deg,#fff 30%,#8e9aaf 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;max-width:920px;position:relative}
+        .hero h1 .hi{background:linear-gradient(135deg,var(--primary) 0%,#00b4cc 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .hero p{font-size:clamp(.95rem,2vw,1.15rem);color:var(--txt-dim);max-width:580px;margin-bottom:2.5rem;line-height:1.85;position:relative}
+        .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;position:relative}
+        .btn-p{background:var(--primary);color:var(--bg);padding:.85rem 2rem;border-radius:var(--r-sm);font-weight:700;text-decoration:none;font-size:.9rem;transition:var(--ease);display:inline-flex;align-items:center;gap:8px}
+        .btn-p:hover{background:#00d4e8;box-shadow:0 8px 28px var(--primary-glow);transform:translateY(-2px)}
+        .btn-s{color:var(--txt);padding:.85rem 2rem;border-radius:var(--r-sm);font-weight:500;text-decoration:none;font-size:.9rem;border:1px solid var(--border);transition:var(--ease);display:inline-flex;align-items:center;gap:8px}
+        .btn-s:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-dim)}
+        .hero-stats{display:flex;gap:3rem;margin-top:5rem;padding-top:3rem;border-top:1px solid var(--border);flex-wrap:wrap;justify-content:center;position:relative}
+        .hs-num{font-size:1.9rem;font-weight:800;color:#fff;display:block;letter-spacing:-1px}
+        .hs-num em{font-style:normal;color:var(--primary)}
+        .hs-lbl{font-size:.76rem;color:var(--txt-dim);text-transform:uppercase;letter-spacing:1px}
+
+        /* ── SECTIONS ── */
+        .section{padding:7rem 6%}
+        .lbl{font-family:'Roboto Mono',monospace;font-size:.73rem;color:var(--primary);text-transform:uppercase;letter-spacing:3px;margin-bottom:1rem;display:block}
+        .s-title{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-1px;line-height:1.15;margin-bottom:1.2rem}
+        .s-sub{color:var(--txt-dim);font-size:.95rem;max-width:500px;line-height:1.85}
+        .s-hdr{max-width:680px;margin:0 auto 4rem;text-align:center}
+        .s-hdr .s-sub{max-width:100%}
+
+        /* ── SERVICES ── */
+        .svc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.5rem}
+        .svc-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:2.5rem;transition:var(--ease);position:relative;overflow:hidden}
+        .svc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--primary-dim) 0%,transparent 60%);opacity:0;transition:var(--ease)}
+        .svc-card:hover{border-color:var(--border-h);transform:translateY(-4px);box-shadow:0 0 40px rgba(0,240,255,.1)}
+        .svc-card:hover::before{opacity:1}
+        .svc-ico{width:48px;height:48px;border-radius:var(--r-sm);background:var(--primary-dim);border:1px solid rgba(0,240,255,.2);display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:1.5rem}
+        .svc-card h3{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:.7rem}
+        .svc-card p{color:var(--txt-dim);font-size:.88rem;line-height:1.8}
+
+        /* ── COMPLIANCE ── */
+        .cpl-bg{background:var(--bg-accent)}
+        .cpl-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+        .cpl-pillars{display:flex;flex-direction:column;gap:1.5rem;margin-top:2rem}
+        .pillar{display:flex;gap:1.2rem;align-items:flex-start}
+        .p-num{font-family:'Roboto Mono',monospace;font-size:.72rem;color:var(--primary);min-width:28px;padding-top:3px}
+        .p-body h4{font-size:.92rem;font-weight:600;color:#fff;margin-bottom:.3rem}
+        .p-body p{color:var(--txt-dim);font-size:.85rem;line-height:1.75}
+        .badge-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+        .badge-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.5rem;text-align:center;transition:var(--ease)}
+        .badge-card:hover{border-color:var(--border-h)}
+        .badge-card .bi{font-size:1.8rem;margin-bottom:.75rem}
+        .badge-card h5{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:.25rem}
+        .badge-card p{font-size:.73rem;color:var(--txt-dim)}
+
+        /* ── ABOUT ── */
+        .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+        .about-list{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem}
+        .about-list li{display:flex;align-items:flex-start;gap:.75rem;color:var(--txt-dim);font-size:.88rem}
+        .about-list li::before{content:'→';color:var(--primary);flex-shrink:0}
+        .stat-blocks{display:flex;flex-direction:column;gap:1rem}
+        .stat-b{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-md);padding:1.75rem 2rem;display:flex;align-items:center;gap:1.5rem;transition:var(--ease)}
+        .stat-b:hover{border-color:var(--border-h)}
+        .stat-v{font-size:2.3rem;font-weight:800;color:var(--primary);letter-spacing:-1px;line-height:1;min-width:80px}
+        .stat-d{font-size:.85rem;color:var(--txt-dim);line-height:1.65}
+
+        /* ── CONTACT ── */
+        .ct-bg{background:var(--bg-accent)}
+        .ct-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:start}
+        .ct-meth{display:flex;align-items:center;gap:1rem;margin-bottom:1.1rem;padding:.85rem 1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-sm)}
+        .ct-ico{font-size:1.1rem;min-width:28px;text-align:center}
+        .ct-txt small{display:block;font-size:.72rem;color:var(--txt-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:.1rem}
+        .ct-txt span{font-size:.88rem;color:var(--txt)}
+        .ct-form{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);padding:2.5rem}
+        .ct-form h3{font-size:1.15rem;font-weight:700;margin-bottom:1.75rem;color:#fff}
+        .fg{margin-bottom:1.15rem}
+        .fg label{display:block;font-size:.75rem;font-weight:600;color:var(--txt-dim);margin-bottom:.45rem;text-transform:uppercase;letter-spacing:.5px}
+        .fg input,.fg textarea,.fg select{width:100%;padding:.82rem 1rem;background:var(--bg);border:1px solid var(--border);color:var(--txt);border-radius:var(--r-sm);font-family:'Inter',sans-serif;font-size:.88rem;transition:border-color .3s;outline:none;appearance:none}
+        .fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--primary)}
+        .fg select option{background:var(--bg)}
+        .fg textarea{resize:vertical;min-height:100px}
+        .btn-sub{width:100%;padding:.95rem;background:var(--primary);color:var(--bg);border:none;border-radius:var(--r-sm);font-weight:700;font-size:.9rem;font-family:'Inter',sans-serif;cursor:pointer;transition:var(--ease);display:flex;align-items:center;justify-content:center;gap:8px}
+        .btn-sub:hover{background:#00d4e8;box-shadow:0 8px 28px var(--primary-glow);transform:translateY(-1px)}
+
+        /* ── FOOTER ── */
+        footer{background:#050714;padding:5rem 6% 2rem;border-top:1px solid var(--border)}
+        .ft-grid{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:3rem;padding-bottom:3rem;border-bottom:1px solid var(--border);margin-bottom:2rem}
+        .ft-brand p{font-size:.855rem;color:var(--txt-dim);line-height:1.85;margin-top:1rem;max-width:270px}
+        .psav-pill{display:inline-flex;align-items:center;gap:6px;margin-top:1.25rem;padding:.38rem .85rem;background:var(--primary-dim);border:1px solid rgba(0,240,255,.22);border-radius:100px;font-size:.7rem;font-weight:700;color:var(--primary);letter-spacing:.5px}
+        .ft-col h4{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--txt-muted);margin-bottom:1.25rem}
+        .ft-col a,.ft-col p{display:block;color:var(--txt-dim);text-decoration:none;font-size:.855rem;margin-bottom:.7rem;transition:color .3s}
+        .ft-col a:hover{color:var(--primary)}
+        .ft-bot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+        .ft-bot p{font-size:.78rem;color:var(--txt-muted)}
+        .ft-legal{display:flex;gap:2rem}
+        .ft-legal a{font-size:.78rem;color:var(--txt-muted);text-decoration:none;cursor:pointer;transition:color .3s}
+        .ft-legal a:hover{color:var(--primary)}
+
+        /* ── MODALS ── */
+        .m-overlay{position:fixed;inset:0;background:rgba(7,9,26,.93);backdrop-filter:blur(12px);z-index:2000;display:none;align-items:center;justify-content:center;padding:2rem}
+        .m-overlay.open{display:flex}
+        .modal{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--r-lg);max-width:680px;width:100%;max-height:82vh;overflow:hidden;display:flex;flex-direction:column;animation:modal-in .3s ease}
+        @keyframes modal-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+        .m-head{padding:1.75rem 2.25rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+        .m-head h2{font-size:1.15rem;font-weight:700}
+        .m-close{background:var(--glass);border:1px solid var(--border);color:var(--txt-dim);width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:var(--ease)}
+        .m-close:hover{color:#fff;border-color:var(--primary)}
+        .m-body{padding:2rem 2.25rem;overflow-y:auto;color:var(--txt-dim);font-size:.875rem;line-height:2}
+        .m-body h3{color:#fff;font-size:.95rem;margin-top:1.5rem;margin-bottom:.4rem}
+        .m-body h3:first-child{margin-top:0}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:1024px){
+            .cpl-grid,.about-grid,.ct-wrap{grid-template-columns:1fr;gap:3rem}
+            .ft-grid{grid-template-columns:1fr 1fr}
         }
-
-        /* --- Header --- */
-        header {
-            padding: 1.5rem 10%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            background: rgba(10, 15, 30, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
+        @media(max-width:768px){
+            .section{padding:5rem 5%}
+            nav{display:none}
+            .hamburger{display:flex}
+            .hero{padding:7rem 5% 5rem}
+            .hero-stats{gap:1.75rem}
+            .ft-grid{grid-template-columns:1fr}
+            .ft-bot{flex-direction:column;text-align:center}
+            .badge-grid{grid-template-columns:1fr 1fr}
         }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--white);
-            font-weight: 700;
-            font-size: 1.5rem;
-            letter-spacing: -1px;
-        }
-
-        nav a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-left: 2rem;
-            font-size: 0.9rem;
-            font-weight: 400;
-            transition: color 0.3s;
-        }
-
-        nav a:hover { color: var(--primary); }
-
-        .btn-cta {
-            background: var(--primary);
-            color: var(--bg-dark);
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 20px rgba(0, 240, 255, 0.3);
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 0 10%;
-            background: radial-gradient(circle at center, #1e293b 0%, #0a0f1e 100%);
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            max-width: 900px;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(180deg, #fff 0%, #8e9aaf 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            color: var(--text-dim);
-            max-width: 600px;
-            margin-bottom: 2.5rem;
-        }
-
-        /* --- Services Grid --- */
-        .section { padding: 8rem 10%; }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .section-title h2 { font-size: 2.5rem; margin-bottom: 1rem; }
-        .section-title p { color: var(--primary); font-family: 'Roboto Mono', monospace; font-size: 0.9rem; text-transform: uppercase; }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--glass);
-            border: 1px solid var(--border);
-            padding: 2.5rem;
-            border-radius: 8px;
-            transition: border 0.3s;
-        }
-
-        .card:hover { border-color: var(--primary); }
-
-        .card h3 { margin-bottom: 1rem; color: var(--white); }
-        .card p { color: var(--text-dim); font-size: 0.95rem; }
-
-        /* --- SVG Logo Icon Component --- */
-        .akiva-logo-svg {
-            width: 40px;
-            height: 40px;
-        }
-
-        /* --- Compliance Badge --- */
-        .badge {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(0, 240, 255, 0.1);
-            color: var(--primary);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-            border: 1px solid var(--primary);
-        }
-
-        /* --- Contact Form --- */
-        .contact-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--bg-accent);
-            padding: 3rem;
-            border-radius: 12px;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: var(--bg-dark);
-            border: 1px solid var(--border);
-            color: white;
-            border-radius: 4px;
-        }
-
-        /* --- Footer --- */
-        footer {
-            padding: 4rem 10%;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            nav { display: none; }
+        @media(max-width:480px){
+            .badge-grid{grid-template-columns:1fr}
+            .modal{margin:.5rem}
+            .m-head,.m-body{padding:1.25rem 1.5rem}
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo-container">
-            <svg class="akiva-logo-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M50 5L93.3013 30V70L50 95L6.69873 70V30L50 5Z" stroke="#00F0FF" stroke-width="4"/>
-                <path d="M50 25L71.6506 37.5V62.5L50 75L28.3494 62.5V37.5L50 25Z" fill="#00F0FF" fill-opacity="0.2"/>
-                <path d="M50 20V80" stroke="#00F0FF" stroke-width="2"/>
-            </svg>
-            AKIVA
-        </a>
-        <nav>
-            <a href="#servicios">Servicios</a>
-            <a href="#seguridad">Seguridad</a>
-            <a href="#nosotros">Institucional</a>
-            <a href="#contacto" class="btn-cta">Apertura de Cuenta</a>
-        </nav>
-    </header>
+<!-- HEADER -->
+<header id="hdr">
+    <a href="#" class="logo">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M50 5L93.3 30V70L50 95L6.7 70V30L50 5Z" stroke="#00F0FF" stroke-width="3.5"/>
+            <path d="M50 25L71.6 37.5V62.5L50 75L28.3 62.5V37.5L50 25Z" fill="#00F0FF" fill-opacity=".18"/>
+            <path d="M50 20V80M30 45L50 55L70 45" stroke="#00F0FF" stroke-width="2"/>
+        </svg>
+        <span class="logo-txt">AKI<em>VA</em></span>
+    </a>
+    <nav id="desk-nav">
+        <a href="#servicios">Servicios</a>
+        <a href="#compliance">Compliance</a>
+        <a href="#nosotros">Institucional</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#contacto" class="nav-cta">Apertura de Cuenta →</a>
+    </nav>
+    <button class="hamburger" id="ham" aria-label="Menú">
+        <span></span><span></span><span></span>
+    </button>
+</header>
 
-    <section class="hero">
-        <div class="badge">PSAV Registrado en Argentina</div>
-        <h1>Infraestructura de Activos Digitales para el Sector Financiero</h1>
-        <p>Soluciones avanzadas de custodia, intercambio fiat-cripto y liquidez OTC con los más altos estándares de compliance regulatorio.</p>
-        <div style="display: flex; gap: 1rem;">
-            <a href="#contacto" class="btn-cta">Contactar a un Advisor</a>
-            <a href="#servicios" style="color: white; text-decoration: none; padding: 0.8rem 1.5rem; border: 1px solid var(--border); border-radius: 4px;">Explorar Servicios</a>
-        </div>
-    </section>
+<!-- MOBILE NAV -->
+<div class="mob-nav" id="mob-nav">
+    <a href="#servicios" onclick="closeNav()">Servicios</a>
+    <a href="#compliance" onclick="closeNav()">Compliance</a>
+    <a href="#nosotros" onclick="closeNav()">Institucional</a>
+    <a href="#contacto" onclick="closeNav()">Contacto</a>
+    <a href="#contacto" class="mob-cta" onclick="closeNav()">Apertura de Cuenta →</a>
+</div>
 
-    <section class="section" id="servicios">
-        <div class="section-title">
-            <p>Nuestras Soluciones</p>
-            <h2>Servicios Financieros de Nueva Generación</h2>
+<!-- HERO -->
+<section class="hero" id="inicio">
+    <div class="badge">PSAV Registrado · CNV Argentina</div>
+    <h1>Infraestructura de <span class="hi">Activos Digitales</span><br>para el Sector Financiero</h1>
+    <p>Soluciones avanzadas de custodia, intercambio fiat–cripto y liquidez OTC con los más altos estándares de compliance regulatorio.</p>
+    <div class="hero-btns">
+        <a href="#contacto" class="btn-p">Contactar un Advisor →</a>
+        <a href="#servicios" class="btn-s">Explorar Servicios</a>
+    </div>
+    <div class="hero-stats">
+        <div>
+            <span class="hs-num">100<em>%</em></span>
+            <span class="hs-lbl">Fondos Segregados</span>
         </div>
-        <div class="grid">
-            <div class="card">
-                <h3>Fiat ↔ Crypto Gateway</h3>
-                <p>On/Off ramp eficiente para ARS y USD. Operativa institucional con liquidación en el día y reportes detallados.</p>
-            </div>
-            <div class="card">
-                <h3>Custodia Institucional</h3>
-                <p>Almacenamiento en frío con tecnología MPC (Multi-Party Computation) y gobernanza multi-firma personalizada.</p>
-            </div>
-            <div class="card">
-                <h3>Mesa de Ejecución OTC</h3>
-                <p>Liquidez profunda para grandes volúmenes con spread competitivo y ejecución discreta para operadores corporativos.</p>
-            </div>
-            <div class="card">
-                <h3>Gestión de Tesorería</h3>
-                <p>Optimización de excedentes corporativos mediante activos digitales de baja volatilidad y alta liquidez.</p>
-            </div>
+        <div>
+            <span class="hs-num">24<em>/7</em></span>
+            <span class="hs-lbl">Mesa OTC Activa</span>
         </div>
-    </section>
+        <div>
+            <span class="hs-num">AML<em>/KYC</em></span>
+            <span class="hs-lbl">Compliance GAFI</span>
+        </div>
+        <div>
+            <span class="hs-num">CNV</span>
+            <span class="hs-lbl">Registrado</span>
+        </div>
+    </div>
+</section>
 
-    <section class="section" style="background-color: var(--bg-accent);" id="seguridad">
-        <div class="section-title">
-            <p>Confianza de Grado Bancario</p>
-            <h2>Seguridad y Cumplimiento Normativo</h2>
+<!-- SERVICES -->
+<section class="section" id="servicios">
+    <div class="s-hdr">
+        <span class="lbl">Soluciones</span>
+        <h2 class="s-title">Servicios Financieros de Nueva Generación</h2>
+        <p class="s-sub">Una plataforma completa para cubrir todas las necesidades de empresas e instituciones en el ecosistema de activos digitales.</p>
+    </div>
+    <div class="svc-grid">
+        <div class="svc-card">
+            <div class="svc-ico">⇄</div>
+            <h3>Fiat ↔ Crypto Gateway</h3>
+            <p>On/Off ramp eficiente para ARS y USD. Operativa institucional con liquidación en el día, reportes detallados y trazabilidad completa.</p>
         </div>
-        <div class="grid">
-            <div class="card" style="background: none;">
-                <h4 style="color: var(--primary); font-family: 'Roboto Mono'; margin-bottom: 1rem;">01. Compliance AML/KYC</h4>
-                <p>Procesos rigurosos de debida diligencia alineados con las normativas de la CNV y estándares internacionales del GAFI.</p>
-            </div>
-            <div class="card" style="background: none;">
-                <h4 style="color: var(--primary); font-family: 'Roboto Mono'; margin-bottom: 1rem;">02. Monitoreo On-Chain</h4>
-                <p>Análisis en tiempo real de transacciones para prevenir actividades ilícitas y asegurar la pureza de los activos.</p>
-            </div>
-            <div class="card" style="background: none;">
-                <h4 style="color: var(--primary); font-family: 'Roboto Mono'; margin-bottom: 1rem;">03. Auditorías Externas</h4>
-                <p>Revisiones periódicas de reservas y seguridad técnica por firmas independientes de primer nivel.</p>
-            </div>
+        <div class="svc-card">
+            <div class="svc-ico">🔐</div>
+            <h3>Custodia Institucional</h3>
+            <p>Almacenamiento en frío con tecnología MPC (Multi-Party Computation) y gobernanza multi-firma personalizable para cada cliente.</p>
         </div>
-    </section>
+        <div class="svc-card">
+            <div class="svc-ico">📊</div>
+            <h3>Mesa de Ejecución OTC</h3>
+            <p>Liquidez profunda para grandes volúmenes, spread competitivo y ejecución discreta para operadores corporativos e institucionales.</p>
+        </div>
+        <div class="svc-card">
+            <div class="svc-ico">🏛</div>
+            <h3>Gestión de Tesorería</h3>
+            <p>Optimización de excedentes corporativos mediante activos digitales de baja volatilidad, alta liquidez y máxima transparencia regulatoria.</p>
+        </div>
+    </div>
+</section>
 
-    <section class="section" id="contacto">
-        <div class="section-title">
-            <h2>Hablemos de su estrategia digital</h2>
-            <p>Un equipo de especialistas está listo para asistir a su empresa.</p>
+<!-- COMPLIANCE -->
+<section class="section cpl-bg" id="compliance">
+    <div class="cpl-grid">
+        <div>
+            <span class="lbl">Regulación & Seguridad</span>
+            <h2 class="s-title">Seguridad y Cumplimiento Normativo</h2>
+            <p class="s-sub">Operamos bajo el marco regulatorio vigente en Argentina con los más altos estándares internacionales de prevención de lavado y financiamiento del terrorismo.</p>
+            <div class="cpl-pillars">
+                <div class="pillar"><span class="p-num">01.</span><div class="p-body"><h4>Compliance AML/KYC</h4><p>Procesos rigurosos de debida diligencia alineados con normativas de la CNV y estándares internacionales del GAFI.</p></div></div>
+                <div class="pillar"><span class="p-num">02.</span><div class="p-body"><h4>Monitoreo On-Chain</h4><p>Análisis en tiempo real de transacciones para prevenir actividades ilícitas y asegurar la pureza de los activos.</p></div></div>
+                <div class="pillar"><span class="p-num">03.</span><div class="p-body"><h4>Auditorías Externas</h4><p>Revisiones periódicas de reservas y seguridad técnica por firmas independientes de primer nivel.</p></div></div>
+                <div class="pillar"><span class="p-num">04.</span><div class="p-body"><h4>Segregación de Fondos</h4><p>Los activos de clientes se mantienen 100% segregados de los fondos operativos de la empresa.</p></div></div>
+            </div>
         </div>
-        <div class="contact-container">
-            <form>
-                <input type="text" placeholder="Nombre de la Institución" required>
-                <input type="email" placeholder="Correo Corporativo" required>
-                <select style="width: 100%; padding: 1rem; margin-bottom: 1rem; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-dim);">
-                    <option>Interés: Custodia</option>
-                    <option>Interés: Operaciones OTC</option>
-                    <option>Interés: On/Off Ramp</option>
-                </select>
-                <textarea rows="4" placeholder="¿Cómo podemos ayudarlo?"></textarea>
-                <button type="submit" class="btn-cta" style="width: 100%; border: none; cursor: pointer;">Solicitar Información</button>
+        <div class="badge-grid">
+            <div class="badge-card"><div class="bi">🏛</div><h5>CNV</h5><p>Registrado como PSAV</p></div>
+            <div class="badge-card"><div class="bi">🌐</div><h5>GAFI</h5><p>Estándares Internacionales</p></div>
+            <div class="badge-card"><div class="bi">🔒</div><h5>ISO 27001</h5><p>Seguridad de la Información</p></div>
+            <div class="badge-card"><div class="bi">✅</div><h5>AML/KYC</h5><p>Debida Diligencia</p></div>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section" id="nosotros">
+    <div class="about-grid">
+        <div>
+            <span class="lbl">Institucional</span>
+            <h2 class="s-title">¿Quiénes somos?</h2>
+            <p class="s-sub">Akiva SRL es un Proveedor de Servicios de Activos Virtuales (PSAV) radicado en la Ciudad Autónoma de Buenos Aires, Argentina, orientado exclusivamente al segmento institucional y corporativo.</p>
+            <p class="s-sub" style="margin-top:1rem">Nuestro equipo combina décadas de experiencia en mercados financieros tradicionales con profundo conocimiento del ecosistema blockchain, ofreciendo soluciones a la medida de cada organización.</p>
+            <ul class="about-list">
+                <li>Equipo con background en banca, fintech y mercados de capitales</li>
+                <li>Infraestructura técnica de nivel enterprise</li>
+                <li>Atención personalizada y dedicada a cada cliente institucional</li>
+                <li>Sede en la Ciudad Autónoma de Buenos Aires</li>
+            </ul>
+        </div>
+        <div class="stat-blocks">
+            <div class="stat-b">
+                <span class="stat-v">PSAV</span>
+                <span class="stat-d">Registrado ante la Comisión Nacional de Valores de la República Argentina</span>
+            </div>
+            <div class="stat-b">
+                <span class="stat-v">24/7</span>
+                <span class="stat-d">Mesa de operaciones disponible las 24 horas para clientes institucionales</span>
+            </div>
+            <div class="stat-b">
+                <span class="stat-v">100%</span>
+                <span class="stat-d">Fondos de clientes completamente segregados y auditables en todo momento</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section ct-bg" id="contacto">
+    <div class="ct-wrap">
+        <div>
+            <span class="lbl">Contacto</span>
+            <h2 class="s-title">Hablemos de su estrategia digital</h2>
+            <p class="s-sub" style="margin-bottom:2.5rem">Un equipo de especialistas está listo para entender sus necesidades y diseñar la solución más adecuada para su organización.</p>
+            <div class="ct-meth"><div class="ct-ico">📍</div><div class="ct-txt"><small>Dirección</small><span>Ciudad Autónoma de Buenos Aires, Argentina</span></div></div>
+            <div class="ct-meth"><div class="ct-ico">✉️</div><div class="ct-txt"><small>Email institucional</small><span>info@akiva.com.ar</span></div></div>
+            <div class="ct-meth"><div class="ct-ico">⏰</div><div class="ct-txt"><small>Horario de atención</small><span>Lunes a Viernes, 9:00 – 18:00 ART</span></div></div>
+        </div>
+        <div class="ct-form">
+            <h3>Solicitar información</h3>
+            <form id="cf">
+                <div class="fg"><label>Nombre / Razón Social</label><input type="text" placeholder="Ej: Empresa S.A." required></div>
+                <div class="fg"><label>Correo Corporativo</label><input type="email" placeholder="contacto@empresa.com" required></div>
+                <div class="fg"><label>Área de Interés</label>
+                    <select>
+                        <option value="">Seleccione un servicio...</option>
+                        <option>Custodia Institucional</option>
+                        <option>Operaciones OTC</option>
+                        <option>On/Off Ramp Fiat–Crypto</option>
+                        <option>Gestión de Tesorería</option>
+                        <option>Consulta General</option>
+                    </select>
+                </div>
+                <div class="fg"><label>Mensaje</label><textarea rows="4" placeholder="Cuéntenos sobre su empresa y sus necesidades..."></textarea></div>
+                <button type="submit" class="btn-sub" id="sbtn">Enviar Consulta →</button>
             </form>
         </div>
-    </section>
+    </div>
+</section>
 
-    <footer>
-        <div>
-            <p>&copy; 2024 Akiva Technologies S.A. - Proveedor de Servicios de Activos Virtuales (PSAV) registrado ante la CNV.</p>
+<!-- FOOTER -->
+<footer>
+    <div class="ft-grid">
+        <div class="ft-brand">
+            <a href="#" class="logo">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M50 5L93.3 30V70L50 95L6.7 70V30L50 5Z" stroke="#00F0FF" stroke-width="3.5"/>
+                    <path d="M50 25L71.6 37.5V62.5L50 75L28.3 62.5V37.5L50 25Z" fill="#00F0FF" fill-opacity=".18"/>
+                    <path d="M50 20V80" stroke="#00F0FF" stroke-width="2"/>
+                </svg>
+                <span class="logo-txt">AKI<em>VA</em></span>
+            </a>
+            <p>Proveedor de Servicios de Activos Virtuales registrado ante la Comisión Nacional de Valores de la República Argentina.</p>
+            <span class="psav-pill">● PSAV · CNV Registrado</span>
         </div>
-        <div style="display: flex; gap: 2rem;">
-            <span>Términos y Condiciones</span>
-            <span>Política de Privacidad</span>
+        <div class="ft-col">
+            <h4>Servicios</h4>
+            <a href="#servicios">Fiat ↔ Crypto Gateway</a>
+            <a href="#servicios">Custodia Institucional</a>
+            <a href="#servicios">Mesa de Ejecución OTC</a>
+            <a href="#servicios">Gestión de Tesorería</a>
         </div>
-    </footer>
+        <div class="ft-col">
+            <h4>Empresa</h4>
+            <a href="#nosotros">Institucional</a>
+            <a href="#compliance">Compliance</a>
+            <a href="#contacto">Contacto</a>
+            <a href="#contacto">Apertura de Cuenta</a>
+        </div>
+        <div class="ft-col">
+            <h4>Contacto</h4>
+            <p>Ciudad Autónoma de Buenos Aires</p>
+            <p>Argentina</p>
+            <a href="mailto:info@akiva.com.ar">info@akiva.com.ar</a>
+            <p style="margin-top:.5rem;font-size:.78rem">Lun–Vie 9:00–18:00 ART</p>
+        </div>
+    </div>
+    <div class="ft-bot">
+        <p>© 2025 Akiva SRL · Ciudad Autónoma de Buenos Aires, Argentina · Todos los derechos reservados</p>
+        <div class="ft-legal">
+            <a onclick="openM('mt')">Términos y Condiciones</a>
+            <a onclick="openM('mp')">Política de Privacidad</a>
+        </div>
+    </div>
+</footer>
 
-    <script>
-        // Smooth scroll
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
+<!-- MODAL: TÉRMINOS -->
+<div class="m-overlay" id="mt">
+    <div class="modal">
+        <div class="m-head"><h2>Términos y Condiciones</h2><button class="m-close" onclick="closeM('mt')">✕</button></div>
+        <div class="m-body">
+            <h3>1. Aceptación de los Términos</h3>
+            <p>Al acceder y utilizar el sitio web de Akiva SRL ("la Empresa") y sus servicios, usted acepta estar sujeto a los presentes Términos y Condiciones. Si no está de acuerdo con alguno de estos términos, le solicitamos que no utilice nuestros servicios.</p>
+            <h3>2. Descripción del Servicio</h3>
+            <p>Akiva SRL es un Proveedor de Servicios de Activos Virtuales (PSAV) registrado ante la Comisión Nacional de Valores (CNV) de la República Argentina. Los servicios incluyen, sin limitación: custodia institucional de activos digitales, operaciones de intercambio fiat-cripto, operaciones OTC y gestión de tesorería corporativa.</p>
+            <h3>3. Elegibilidad</h3>
+            <p>Los servicios de Akiva SRL están destinados exclusivamente a personas jurídicas y entidades institucionales. Para acceder a los servicios, el cliente deberá completar satisfactoriamente el proceso de debida diligencia (KYC/AML) conforme a la normativa vigente.</p>
+            <h3>4. Riesgos Asociados</h3>
+            <p>La operación con activos virtuales conlleva riesgos significativos, incluyendo la posibilidad de pérdida total del capital. El cliente declara conocer y aceptar dichos riesgos. Akiva SRL no garantiza rendimientos ni resultados específicos de ninguna operación.</p>
+            <h3>5. Cumplimiento Normativo</h3>
+            <p>Akiva SRL opera en cumplimiento con la normativa aplicable de la CNV, las disposiciones de Prevención de Lavado de Activos y Financiamiento del Terrorismo (PLA/FT) y los estándares del GAFI. El cliente se compromete a suministrar información veraz y actualizada.</p>
+            <h3>6. Limitación de Responsabilidad</h3>
+            <p>Akiva SRL no será responsable por daños directos, indirectos, incidentales o consecuentes derivados del uso de los servicios, salvo en caso de dolo o culpa grave de la Empresa debidamente comprobada.</p>
+            <h3>7. Confidencialidad</h3>
+            <p>Toda la información compartida por el cliente en el marco de la relación comercial será tratada con estricta confidencialidad, conforme a la legislación argentina aplicable y las mejores prácticas de la industria financiera.</p>
+            <h3>8. Modificaciones</h3>
+            <p>Akiva SRL se reserva el derecho de modificar estos Términos y Condiciones en cualquier momento. Los cambios serán notificados a los clientes registrados y publicados en este sitio web con no menos de 10 días hábiles de anticipación.</p>
+            <h3>9. Jurisdicción</h3>
+            <p>Estos Términos y Condiciones se rigen por las leyes de la República Argentina. Cualquier controversia será sometida a la jurisdicción de los Tribunales Ordinarios de la Ciudad Autónoma de Buenos Aires, con renuncia expresa a cualquier otro fuero.</p>
+            <h3>10. Contacto</h3>
+            <p>Para consultas sobre estos términos, puede contactarnos en: <strong>info@akiva.com.ar</strong></p>
+        </div>
+    </div>
+</div>
 
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.padding = '1rem 10%';
-                header.style.boxShadow = '0 4px 30px rgba(0,0,0,0.5)';
-            } else {
-                header.style.padding = '1.5rem 10%';
-                header.style.boxShadow = 'none';
-            }
-        });
-    </script>
+<!-- MODAL: PRIVACIDAD -->
+<div class="m-overlay" id="mp">
+    <div class="modal">
+        <div class="m-head"><h2>Política de Privacidad</h2><button class="m-close" onclick="closeM('mp')">✕</button></div>
+        <div class="m-body">
+            <h3>1. Responsable del Tratamiento de Datos</h3>
+            <p>Akiva SRL, con domicilio en la Ciudad Autónoma de Buenos Aires, República Argentina, es responsable del tratamiento de los datos personales recopilados a través de este sitio web y en el marco de la prestación de sus servicios.</p>
+            <h3>2. Datos que Recopilamos</h3>
+            <p>Recopilamos información que usted nos proporciona voluntariamente al completar formularios de contacto o de registro, incluyendo: razón social, nombre de contacto, dirección de correo electrónico corporativo y el contenido de sus consultas o mensajes.</p>
+            <h3>3. Finalidad del Tratamiento</h3>
+            <p>Los datos recopilados se utilizan para: (a) responder a sus consultas y solicitudes de información; (b) gestionar la relación comercial y prestar los servicios contratados; (c) cumplir con obligaciones legales y regulatorias, incluyendo el proceso KYC/AML; (d) enviar comunicaciones institucionales relevantes.</p>
+            <h3>4. Base Legal</h3>
+            <p>El tratamiento de sus datos se basa en el consentimiento prestado, la ejecución del contrato de servicios y el cumplimiento de obligaciones legales conforme a la Ley Argentina N° 25.326 de Protección de Datos Personales.</p>
+            <h3>5. Conservación de los Datos</h3>
+            <p>Los datos personales se conservarán durante el tiempo necesario para cumplir con las finalidades descritas y, en todo caso, durante los plazos legalmente exigidos por la normativa vigente en materia financiera y de prevención del lavado de activos.</p>
+            <h3>6. Compartición de Datos</h3>
+            <p>Akiva SRL no vende, alquila ni comparte datos personales de sus clientes con terceros con fines comerciales. Solo podrá compartir información con autoridades regulatorias o judiciales cuando así lo exija la normativa aplicable.</p>
+            <h3>7. Seguridad de la Información</h3>
+            <p>Implementamos medidas técnicas y organizativas apropiadas para proteger los datos personales contra accesos no autorizados, alteración, divulgación o destrucción, en línea con los estándares de seguridad de la industria financiera.</p>
+            <h3>8. Derechos del Titular</h3>
+            <p>Conforme a la Ley N° 25.326, usted tiene derechos de acceso, rectificación, actualización, confidencialidad y supresión de sus datos personales. Para ejercer estos derechos, contáctenos en: <strong>info@akiva.com.ar</strong></p>
+            <h3>9. Cookies</h3>
+            <p>Este sitio web puede utilizar cookies técnicas estrictamente necesarias para su funcionamiento. No utilizamos cookies de rastreo o publicidad de terceros sin su consentimiento explícito.</p>
+            <h3>10. Modificaciones</h3>
+            <p>Esta Política de Privacidad puede ser actualizada periódicamente. Le notificaremos sobre cambios significativos a través de los canales de comunicación establecidos con cada cliente.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Header
+    const hdr = document.getElementById('hdr');
+    window.addEventListener('scroll', () => hdr.classList.toggle('scrolled', window.scrollY > 60));
+
+    // Mobile nav
+    const ham = document.getElementById('ham');
+    const mob = document.getElementById('mob-nav');
+    ham.addEventListener('click', () => {
+        ham.classList.toggle('open');
+        mob.classList.toggle('open');
+        document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+    });
+    function closeNav() {
+        ham.classList.remove('open');
+        mob.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    // Modals
+    function openM(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeM(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow = ''; }
+    document.querySelectorAll('.m-overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) { o.classList.remove('open'); document.body.style.overflow = ''; } }));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { document.querySelectorAll('.m-overlay.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow = ''; }); } });
+
+    // Form
+    document.getElementById('cf').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const b = document.getElementById('sbtn');
+        b.textContent = '✓ Consulta enviada con éxito';
+        b.style.background = '#00cc88';
+        setTimeout(() => { b.textContent = 'Enviar Consulta →'; b.style.background = ''; this.reset(); }, 3500);
+    });
+</script>
 </body>
 </html>
